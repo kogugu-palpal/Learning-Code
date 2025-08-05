@@ -1,0 +1,1 @@
+print("Hello form a Python file!")
