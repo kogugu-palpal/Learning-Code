@@ -3,6 +3,9 @@ from datetime import datetime
 import pyttsx3
 import random
 
+from tkinter import messagebox
+from PIL import Image, ImageTk
+
 # Voice test
 #engine = pyttsx3.init()
 #engine.say("This is a test")
@@ -14,7 +17,8 @@ engine = pyttsx3.init()
 # Create window
 root = tk.Tk()
 root.title("Greeting Bot")
-root.geometry("400x350")
+root.geometry("400x400")
+root.configure(bg="#f0f8ff")
 
 # Fonts
 label_font = ("Arial", 12)
@@ -65,20 +69,37 @@ def greet():
     hour = datetime.now().hour
     if hour < 12:
         time_greeting = "Good morning"
+        image_path = "images/sun.png"
     elif hour < 18:
         time_greeting = "Good afternoon"
+        image_path = "afternoon.png"
     else:
         time_greeting = "Good evening"
+        image_path = "moon.png"
 
     greeting = f"{time_greeting}, {name}!"
     greeting_label.config(text=greeting)
 
-    # Speak aloud
+# Speak aloud
     engine.say(greeting)
     engine.runAndWait()
-
-
     engine.stop()  # Stop any previous speech
+
+    # Load and display image
+    try:
+        img = Image.open(image_path)
+        img = img.resize((100, 100))  # Resize if needed
+        photo = ImageTk.PhotoImage(img)
+        image_label.config(image=photo)
+        image_label.image = photo  # Keep a reference to avoid garbage collection
+    except Exception as e:
+        messagebox.showerror("Image Error", f"Couldn't load image: {e}")
+
+
+
+# Image display area
+image_label = tk.Label(root, bg="#f0f8ff")
+image_label.grid(row=5, column=0, columnspan=2, pady=10)
 
 
 # Set up Lucky Drew feature
@@ -97,13 +118,10 @@ def lucky_greet():
     g_luck = random.choice(messages)
     greeting_label.config(text=g_luck)
 
-
-    engine = pyttsx3.init()
-    engine.setProperty('rate', 180)  # Set speech rate
-   
     # Speak aloud
     engine.say(g_luck)
     engine.runAndWait()
+    engine.stop()  # Stop any previous speech
 
 # Widgets
 name_label = tk.Label(root, text="Enter your name:", font=label_font)
