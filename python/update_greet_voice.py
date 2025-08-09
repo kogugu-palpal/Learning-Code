@@ -15,12 +15,13 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 # Create window
 root = tk.Tk()
 root.title("Greeting Bot")
-root.geometry("400x400")
+root.geometry("400x500")
 
 # Fonts
 label_font = ("Arial", 12)
 entry_font = ("Arial", 12)
 button_font = ("Arial", 12, "bold")
+
 
 # Themes
 themes = {
@@ -134,6 +135,15 @@ theme_menu = tk.OptionMenu(root, theme_mode, "Auto", "Light", "Dark", lambda _: 
 # Image label (created once, updated later)
 image_label = tk.Label(root, bg="#f0f0f0")
 
+# Clear function
+def clear_name():
+    clear = tk.Entry.delete(name_entry, 0, tk.END)  # Clear the entry field
+    clear_button.config(bg=clear_button_bg)  # Reset button color
+
+# Adding clear button
+clear_button_bg = "#f6ec66"  # Yellow color for clear button
+clear_button = tk.Button(root, text="Clear", command=clear_name, font=button_font, bg=clear_button_bg)
+
 # Layout (using only grid)
 name_label.grid(row=0, column=0, padx=10, pady=20, sticky="e")
 name_entry.grid(row=0, column=1, padx=10, pady=20)
@@ -143,9 +153,12 @@ theme_label.grid(row=3, column=0, padx=10, pady=10, sticky="e")
 theme_menu.grid(row=3, column=1, padx=10, pady=10, sticky="w")
 lucky_button.grid(row=4, column=0, columnspan=2, pady=10)
 image_label.grid(row=5, column=0, columnspan=2, pady=10)
+clear_button.grid(row=6, column=0, columnspan=2, pady=10)
+
 
 # Apply theme initially
 apply_theme()
+
 
 # Start the app
 root.mainloop()
