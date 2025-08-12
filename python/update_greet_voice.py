@@ -180,7 +180,7 @@ theme_menu = tk.OptionMenu(root, theme_mode, "Auto", "Light", "Dark", command=la
 # Layout (using only grid)
 # Add theme selector to the grid if not using button_frame
 theme_label.grid(row=0, column=0, padx=10, pady=10, sticky="e") 
-theme_menu.grid(row=0, column=0, padx=10, pady=10, sticky="w") 
+theme_menu.grid(row=0, column=1, padx=10, pady=10, sticky="w") 
 # Add other widgets to the grid
 name_label.grid(row=1, column=0, padx=5, pady=20, sticky="e")
 name_entry.grid(row=1, column=1, padx=10, pady=20)
