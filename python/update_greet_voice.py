@@ -15,7 +15,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 # Create window
 root = tk.Tk()
 root.title("Greeting Bot")
-root.geometry("400x500")
+root.geometry("450x500")
 
 # Fonts
 label_font = ("Arial", 12)
@@ -120,13 +120,32 @@ def lucky_greet():
     # Speak aloud
     engine.say(g_luck)
     engine.runAndWait()
-    
+
+# Clear function
+def clear_name():
+    clear = tk.Entry.delete(name_entry, 0, tk.END)  # Clear the entry field
+    clear_button.config(bg=clear_button_bg)  # Reset button color
+
+clear_button_bg = "#f6ec66"  # Yellow color for clear button
+
+# create restart function to reset the app
+def restart_app():
+    name_entry.delete(0, tk.END)  # Clear the entry field
+    greeting_label.config(text="")  # Clear the greeting label
+    image_label.config(image='')  # Clear the image label
+    clear_button.config(bg=clear_button_bg)  # Reset button color
+
+restart_button_bg = "#1cfa10"  # Green color for restart button
+
 # Widgets
 name_label = tk.Label(root, text="Enter your name:", font=label_font)
 name_entry = tk.Entry(root, font=entry_font, width=25)
 greet_button = tk.Button(root, text="Greet Me", command=greet, font=button_font)
 greeting_label = tk.Label(root, text="", font=("Arial", 14, "bold"))
 lucky_button = tk.Button(root, text="I'm Feeling Lucky", command=lucky_greet, font=button_font)
+clear_button = tk.Button(root, text="Clear", command=clear_name, font=button_font, bg=clear_button_bg) # Adding clear button to clear the name entry
+restart_button = tk.Button(root, text="Restart", command=restart_app, font=button_font, bg=restart_button_bg)  # Adding restart button to reset the app
+
 
 # Theme selector
 theme_label = tk.Label(root, text="Theme Mode:", font=label_font)
@@ -135,25 +154,20 @@ theme_menu = tk.OptionMenu(root, theme_mode, "Auto", "Light", "Dark", lambda _: 
 # Image label (created once, updated later)
 image_label = tk.Label(root, bg="#f0f0f0")
 
-# Clear function
-def clear_name():
-    clear = tk.Entry.delete(name_entry, 0, tk.END)  # Clear the entry field
-    clear_button.config(bg=clear_button_bg)  # Reset button color
-
-# Adding clear button
-clear_button_bg = "#f6ec66"  # Yellow color for clear button
-clear_button = tk.Button(root, text="Clear", command=clear_name, font=button_font, bg=clear_button_bg)
 
 # Layout (using only grid)
-name_label.grid(row=0, column=0, padx=10, pady=20, sticky="e")
+name_label.grid(row=0, column=0, padx=5, pady=20, sticky="e")
 name_entry.grid(row=0, column=1, padx=10, pady=20)
-greet_button.grid(row=1, column=0, columnspan=2, pady=10)
+clear_button.grid(row=0, column=2, columnspan=2, pady=20, sticky="w")
+greet_button.grid(row=1, columnspan=4, pady=10)
 greeting_label.grid(row=2, column=0, columnspan=2, pady=20)
 theme_label.grid(row=3, column=0, padx=10, pady=10, sticky="e")
 theme_menu.grid(row=3, column=1, padx=10, pady=10, sticky="w")
 lucky_button.grid(row=4, column=0, columnspan=2, pady=10)
 image_label.grid(row=5, column=0, columnspan=2, pady=10)
-clear_button.grid(row=6, column=0, columnspan=2, pady=10)
+restart_button.grid(row=6, column=0, columnspan=2, pady=10)
+
+
 
 
 # Apply theme initially
