@@ -49,14 +49,23 @@ def get_auto_theme():
 def apply_theme():
     mode = theme_mode.get()
     theme = themes[get_auto_theme()] if mode == "Auto" else themes[mode]
-
+    # Update main window
     root.configure(bg=theme["bg"])
+    # Update labels and entry fields
     name_label.config(bg=theme["bg"], fg=theme["fg"])
+    name_entry.config(bg=theme["bg"], fg=theme["fg"],insertbackground=theme["fg"])
     greeting_label.config(bg=theme["bg"], fg=theme["fg"])
-    greet_button.config(bg=theme["button_bg"], fg=theme["button_fg"])
     theme_label.config(bg=theme["bg"], fg=theme["fg"])
-    theme_menu.config(bg=theme["bg"], fg=theme["fg"])
+    # Update buttons
+    greet_button.config(bg=theme["button_bg"], fg=theme["button_fg"])
     lucky_button.config(bg=theme["button_bg"], fg=theme["button_fg"])
+    clear_button.config(bg=theme["button_bg"], fg=theme["button_fg"]) # make sure clear button also has theme
+    restart_button.config(bg=theme["button_bg"], fg=theme["button_fg"])    
+    
+    # Update theme menu
+    theme_menu["menu"].config(bg=theme["bg"], fg=theme["fg"])
+    theme_menu.config(bg=theme["bg"], fg=theme["fg"])
+
     image_label.config(bg=theme["bg"])
 
 # Greeting function
@@ -123,9 +132,8 @@ def lucky_greet():
 
 # Clear function
 def clear_name():
-    clear = tk.Entry.delete(name_entry, 0, tk.END)  # Clear the entry field
-    clear_button.config(bg=clear_button_bg)  # Reset button color
-
+    name_entry.delete(0, tk.END)  # A more direct way to clear the entry field
+    
 clear_button_bg = "#f6ec66"  # Yellow color for clear button
 
 # create restart function to reset the app
@@ -146,28 +154,42 @@ lucky_button = tk.Button(root, text="I'm Feeling Lucky", command=lucky_greet, fo
 clear_button = tk.Button(root, text="Clear", command=clear_name, font=button_font, bg=clear_button_bg) # Adding clear button to clear the name entry
 restart_button = tk.Button(root, text="Restart", command=restart_app, font=button_font, bg=restart_button_bg)  # Adding restart button to reset the app
 
-
-# Theme selector
-theme_label = tk.Label(root, text="Theme Mode:", font=label_font)
-theme_menu = tk.OptionMenu(root, theme_mode, "Auto", "Light", "Dark", lambda _: apply_theme())
-
 # Image label (created once, updated later)
 image_label = tk.Label(root, bg="#f0f0f0")
 
+# Tell grid to expand column equally
+root.grid_columnconfigure(0, weight=2)
+root.grid_columnconfigure(1, weight=1)
+root.grid_columnconfigure(2, weight=1)
+
+"""
+# Frame to hold the buttons together
+button_frame = tk.Frame(root)
+button_frame.grid(row=3, column=1)
+
+# Add buttons to the button frame
+theme_label = tk.Label(button_frame, text="Theme Mode:", font=label_font)
+theme_label.pack(side="left", padx=5, pady=5)
+theme_menu = tk.OptionMenu(button_frame, theme_mode, "Auto", "Light", "Dark", command=lambda _: apply_theme())
+theme_menu.pack(side="right", padx=5, pady=5)
+"""
+# Theme selector
+theme_label = tk.Label(root, text="Theme Mode:", font=label_font)
+theme_menu = tk.OptionMenu(root, theme_mode, "Auto", "Light", "Dark", command=lambda _: apply_theme())
 
 # Layout (using only grid)
-name_label.grid(row=0, column=0, padx=5, pady=20, sticky="e")
-name_entry.grid(row=0, column=1, padx=10, pady=20)
-clear_button.grid(row=0, column=2, columnspan=2, pady=20, sticky="w")
-greet_button.grid(row=1, columnspan=4, pady=10)
-greeting_label.grid(row=2, column=0, columnspan=2, pady=20)
-theme_label.grid(row=3, column=0, padx=10, pady=10, sticky="e")
-theme_menu.grid(row=3, column=1, padx=10, pady=10, sticky="w")
-lucky_button.grid(row=4, column=0, columnspan=2, pady=10)
-image_label.grid(row=5, column=0, columnspan=2, pady=10)
-restart_button.grid(row=6, column=0, columnspan=2, pady=10)
-
-
+# Add theme selector to the grid if not using button_frame
+theme_label.grid(row=0, column=0, padx=10, pady=10, sticky="e") 
+theme_menu.grid(row=0, column=0, padx=10, pady=10, sticky="w") 
+# Add other widgets to the grid
+name_label.grid(row=1, column=0, padx=5, pady=20, sticky="e")
+name_entry.grid(row=1, column=1, padx=10, pady=20)
+clear_button.grid(row=1, column=2, columnspan=2, pady=20, sticky="w")
+greet_button.grid(row=2, columnspan=3, pady=10)
+greeting_label.grid(row=3, columnspan=3, pady=20)
+lucky_button.grid(row=5, column=0, columnspan=3, pady=10)
+image_label.grid(row=6, column=0, columnspan=3, pady=10)
+restart_button.grid(row=7, column=0, columnspan=3, pady=10)
 
 
 # Apply theme initially
