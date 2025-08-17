@@ -76,10 +76,11 @@ class GreetingBot():
         self.hour = datetime.now().hour
         if self.hour < 12:
             self.time_greeting = "Good morning"
-            self.image_label.config(image=self.imageByTime["sun"])
-            #self.image_label.image = self.imageByTime["sun"]  # Keep a reference
+            #self.image_label.config(image="filename")
+            self.image_label.config(image=self.imageByTime["sun"]) # Keep a reference
         elif self.hour < 18:
             self.time_greeting = "Good afternoon"
+            #self.image_label.config(image="filename")
             self.image_label.config(image=self.imageByTime["afternoon"])
         else:
             self.time_greeting = "Good evening"
@@ -94,45 +95,25 @@ class GreetingBot():
     def load_image(self, *args):
         # where do run this program to get image and tell image path
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        image_path = os.path.join(script_dir, "sun.png")
-        # Load the image using PIL
-        
+
+
         image_files = ["sun.png", "afternoon.png", "moon.png"]
-        count = 3
-        while count > 0:
-            try:
-                img = Image.open(image_files)
-                img = img.resize((200, 200), Image.LANCZOS)
-                photo_image = ImageTk.PhotoImage(img)     
-                self.imageByTime["sun"] = photo_image
-                photo_image = ImageTk.PhotoImage(img)     
-                self.imageByTime["afternoon"] = photo_image
-                photo_image = ImageTk.PhotoImage(img) 
-                self.imageByTime["moon"] = photo_image
-                break
-            except FileNotFoundError:
-                print(f"Image not found at {image_path}. Please check the path.")
-                count -= 1
-                if count == 0:
-                    return
-        
-        """        
-        #img = Image.open(image_path)
-        img = img.resize((200, 200), Image.LANCZOS)  # Resize the image to fit the label
-        # load Image to PhotoImage and store it in the dictionary
-        photo_image = ImageTk.PhotoImage(img)     
-        self.imageByTime["sun"] = photo_image
-        photo_image = ImageTk.PhotoImage(img)     
-        self.imageByTime["afternoon"] = photo_image
-        photo_image = ImageTk.PhotoImage(img) 
-        self.imageByTime["moon"] = photo_image
+        for filename in image_files:
+            # get full image file path
+            image_path = os.path.join(script_dir, "images", filename)
 
-        self.imageByTime = {
-            "sun": photo_image,
-            "afternoon": photo_image,
-            "moon": photo_image
-            }"""
+            # open the image file
+            img = Image.open(image_path)
+            
+            # resize image
+            img = img.resize((150, 150), Image.LANCZOS)
 
+            # convert the image to photo
+            photo_image = ImageTk.PhotoImage(img)
+
+            # Add that to dictionary
+            key = filename.split('.')[0]
+            self.imageByTime[key] = photo_image
 
 
 
