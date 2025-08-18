@@ -1,10 +1,8 @@
-import tkinter as tk
-from datetime import datetime
-from PIL import Image, ImageTk
-import pyttsx3
-import random
-import os
-
+import tkinter as tk   # need to import this for GUI
+from datetime import datetime    # need to import for system datetime
+from PIL import Image, ImageTk   # need to impoort Pillow for Image input
+import os                       # need to import for load file path
+import random                   # need for random select
 
 class GreetingBot():
     themes = {
@@ -24,7 +22,7 @@ class GreetingBot():
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Greeting Bot")
-        self.root.geometry("450x500")
+        self.root.geometry("400x450")
 
         self.theme_mode = tk.StringVar(value="Auto")
         self.theme_mode.trace_add("write", self.apply_theme)
@@ -34,23 +32,28 @@ class GreetingBot():
 
         # Add widget
         self.theme_label = tk.Label(self.root, text="Select your Themes:")
-        self.theme_label.pack(pady=10) 
         self.theme_menu = tk.OptionMenu(self.root, self.theme_mode, "Auto", "Light", "Dark")
-        self.theme_menu.pack(pady=10)
-        self.name_label = tk.Label(self.root, text="Enter your name:")
-        self.name_label.pack(pady=10)
+        self.name_label = tk.Label(self.root, text="Enter your name:")  
         self.name_entry = tk.Entry(self.root)
-        self.name_entry.pack(pady=10)
         self.clear_button = tk.Button(self.root, text="Clear Name", command=self.clear_name)
-        self.clear_button.pack(pady=10)
         self.greet_button = tk.Button(self.root, text="Hello", command=self.greet)
-        self.greet_button.pack(pady=10)
-        self.greeting_label = tk.Label(self.root, text="")
-        self.greeting_label.pack(pady=10)     
+        self.greeting_label = tk.Label(self.root, text="")    
+        self.lucky_label = tk.Label(self.root, text="")
+        self.lucky_button = tk.Button(self.root, text="I'm Lucky", command=self.lucky_message)
         self.image_label = tk.Label(self.root)
-        self.image_label.pack(pady=10)
+        # Text and Button area
+        self.theme_label.grid(row=0, column=0, padx=10, pady=5, sticky='e') 
+        self.theme_menu.grid(row=0, column=1, padx=5, pady=10, sticky='w')
+        self.name_label.grid(row=1, column=0, padx=10,pady=10, sticky='w')
+        self.name_entry.grid(row=1, column=1, padx=10,pady=10)
+        self.clear_button.grid(row=1, column=2, padx=10, pady=10)
+        self.greet_button.grid(row=2, column=1, padx=10, pady=10)
+        self.lucky_button.grid(row=2, column=2, padx=10, pady=10)
+        self.greeting_label.grid(row=3, column=0, columnspan=3, pady=10)
+        self.image_label.grid(row=4, column=0, columnspan=3, pady=10)
 
-        self.load_image() # Load the image at initialization
+        # configure the columns to expand with the window
+        self.root.columnconfigure(1, weight=1)
 
     def get_auto_theme(self):
         hour = datetime.now().hour
@@ -89,7 +92,8 @@ class GreetingBot():
         self.greeting = f"{self.time_greeting}, {self.name}!"
         self.greeting_label.config(text=self.greeting)
 
-
+        self.engine.say(self.greeting_label)
+        
         #self.image_label.config(image=self.imageByTime)        
   
     def load_image(self, *args):
@@ -115,7 +119,22 @@ class GreetingBot():
             key = filename.split('.')[0]
             self.imageByTime[key] = photo_image
 
-
+    def lucky_message(self):
+        self.messagebox  = [
+            "Hey superstar! ",
+            "You are doing amazing today!",
+            "The world is lucky to have you!",
+            "Ready to rock this day? ",
+            "Let is make today count!",
+            "You got this!",
+            "Be kind, be bold, be you.",
+            "You shine brighter than my screen!",
+            "Keep smiling, it suits you ",
+        ]
+        self.lucky = random.choice(self.messagebox)
+        self.greeting_label.config(text=self.lucky)
+        #self.lucky = f"{self.messagebox}!"
+        
 
     def run(self):
         self.root.mainloop()
