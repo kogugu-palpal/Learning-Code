@@ -1,0 +1,46 @@
+BoxLayout:
+    orientation: 'vertical'
+    
+    # The GridLayout now has a fixed size and won't stretch vertically
+    GridLayout:
+        cols: 3
+        padding: 20
+        spacing: 10
+        size_hint_y: None
+        height: 60
+
+        Label:
+            text: "Enter your name!"
+            size_hint_x: None
+            width: 150
+            
+        TextInput:
+            text: "Please enter your name!"
+            
+        Button:
+            text: "Clear Name!"
+            size_hint_x: None
+            width: 150
+
+    Label:
+        text: "This is where your greeting message will go."
+        
+    Button:
+        text: "This is your 'Hello' button."
+
+#<<<< testcode >>>>
+GridLayout:
+        cols: 3   
+        padding: 20
+        spacing: 30
+
+        label:
+            text: "a"
+        Button:
+            text: "Hello!!!!"
+            #size_hint_x: 0
+            
+            width: 250
+
+        label:
+            text: "a"
