@@ -1,0 +1,45 @@
+BoxLayout:
+    orientation: 'vertical'
+    padding: 30
+    spacing: 20
+
+    GridLayout:
+        cols: 3
+        padding: [10, 0, 10, 0]
+        spacing: 10
+        size_hint_y: None
+        height: 100
+
+        Label:
+            text: "Enter your name!"
+            size_hint_x: None
+            width: 150
+            font_size: '20sp'
+
+        TextInput:
+            text: "Please enter your name!"
+            id: name_input
+            font_size: '20sp'
+            multiline: False
+
+        Button:
+            text: "Clear Name!"
+            size_hint_x: None
+            width: 150
+            font_size: '20sp'
+            on_press: app.clear(name_input)
+
+    Label:
+        id: hello_text
+        text: "This is where your greeting message will go."
+        font_size: '24sp'
+        halign: 'center'
+        valign: 'middle'
+        text_size: self.size
+        
+    Button:
+        text: "Hello!"
+        size_hint_y: None
+        height: 60
+        font_size: '24sp'
+        on_press: app.hello(name_input, hello_text)

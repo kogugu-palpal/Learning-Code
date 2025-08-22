@@ -3,31 +3,26 @@ BoxLayout:
     padding: 30
     spacing: 20
 
-    GridLayout:
-        cols: 3
-        padding: [10, 0, 10, 0]
-        spacing: 10
+    Label:
+        text: "Enter your name!"
         size_hint_y: None
-        height: 100
+        height: 40
+        font_size: '20sp'
 
-        Label:
-            text: "Enter your name!"
-            size_hint_x: None
-            width: 150
-            font_size: '20sp'
-
-        TextInput:
-            text: "Please enter your name!"
-            id: name_input
-            font_size: '20sp'
-            multiline: False
-
-        Button:
-            text: "Clear Name!"
-            size_hint_x: None
-            width: 150
-            font_size: '20sp'
-            on_press: app.clear(name_input)
+    TextInput:
+        text: "Please enter your name!"
+        id: name_input
+        size_hint_y: None
+        height: 40
+        font_size: '20sp'
+        multiline: False
+        
+    Button:
+        text: "Clear Name!"
+        size_hint_y: None
+        height: 60
+        font_size: '20sp'
+        on_press: app.clear(name_input)
 
     Label:
         id: hello_text
