@@ -5,7 +5,7 @@ BoxLayout:
         cols: 3
         padding: 20
         spacing: 10
-        size_hint_y: None  # vertical not expend
+        size_hint_y: None
         height: 80
 
         Label:
@@ -16,8 +16,7 @@ BoxLayout:
         TextInput:
             text: "Please enter your name!"
             id: name_input
-
-
+            
         Button:
             text: "Clear Name!"
             size_hint_x: None
@@ -25,22 +24,9 @@ BoxLayout:
             on_press: app.clear(name_input)
 
     Label:
-        
         id: hello_text
-
+        text: "This is where your greeting message will go."
+        
     Button:
-        text: "Hello!!" 
-        width: 150
-        on_press: app.hello(hello_text)
-
-            
-
-# Knowledge section!!!
-#The Main Box (BoxLayout): The very first line, BoxLayout:, acts as your main, top-level container. We set its orientation to vertical to tell it to stack everything inside it from top to bottom.
-
-#The Inner Tray (GridLayout): The next part is your GridLayout:. This is a smaller container that sits inside the main BoxLayout. We give it a specific height of 60 and set its size_hint_y to None. This is the most important part for fixing your layout! It tells Kivy, "Don't stretch this container vertically to fill all the space." It just takes the height it needs.
-
-#The Items on the Tray (Label, TextInput, Button): Finally, you have your three widgets (Label, TextInput, Button) neatly arranged inside the GridLayout tray. We already know that GridLayout with cols: 3 organizes them horizontally.
-
-# X >>>> __________ horizontally
-# Y >>>> | vertical
+        text: "Hello!"
+        on_press: app.hello(name_input, hello_text)
