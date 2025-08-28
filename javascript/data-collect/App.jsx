@@ -5,6 +5,7 @@ import { getAuth, signInAnonymously } from 'firebase/auth';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
+// This configuration is automatically provided by the Canvas environment.
 const firebaseConfig = {
     apiKey: "AIzaSyAAHVZbTMRfV-VXUI1S9exJRfLjzXXneUw",
     authDomain: "data-collection-ad39e.firebaseapp.com",
@@ -25,6 +26,7 @@ const App = () => {
     const [db, setDb] = useState(null);
     const [userId, setUserId] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [statusMessage, setStatusMessage] = useState('');
 
     // Effect hook to initialize Firebase and handle authentication.
     useEffect(() => {
@@ -43,23 +45,37 @@ const App = () => {
             } catch (error) {
                 console.error("Error initializing Firebase:", error);
                 setLoading(false);
+                setStatusMessage('Error initializing Firebase. Please check your console.');
             }
         };
 
         initFirebase();
     }, []);
 
+    // Function to validate the date of birth format.
+    const validateDob = (dateString) => {
+        // Regex for DD/MM/YYYY format.
+        const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
+        return regex.test(dateString);
+    };
+
     // Function to handle form submission.
     const handleSubmit = async (e) => {
         e.preventDefault(); 
+        setStatusMessage('');
 
         if (!db || !userId) {
-            console.error("Firebase is not initialized or user is not authenticated.");
+            setStatusMessage('Error: Firebase is not initialized or user is not authenticated.');
             return;
         }
 
         if (!name || !dob || !fatherName) {
-            alert('Please fill out all fields.');
+            setStatusMessage('Please fill out all fields.');
+            return;
+        }
+
+        if (!validateDob(dob)) {
+            setStatusMessage('Please enter Date of Birth in DD/MM/YYYY format.');
             return;
         }
 
@@ -74,6 +90,7 @@ const App = () => {
                 createdAt: serverTimestamp(),
             });
             console.log("Document written with ID:", docRef.id);
+            setStatusMessage('Data submitted successfully!');
 
             // Clear the form fields after successful submission.
             setName('');
@@ -82,18 +99,18 @@ const App = () => {
 
         } catch (error) {
             console.error("Error adding document:", error);
+            setStatusMessage('Error submitting data. Please try again.');
         }
     };
 
     // Function to handle the "Exit" button click.
     const handleExit = () => {
-        // This could be used for more complex logic, but for now, it's a simple alert.
-        alert('Exiting the form.');
+        setStatusMessage('Exiting the form.');
     };
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
                 <div className="text-gray-700 text-xl">Loading...</div>
             </div>
         );
@@ -101,12 +118,12 @@ const App = () => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-            <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+            <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm">
                 <div className="flex flex-col items-center mb-6">
                     <div className="w-24 h-24 bg-gray-200 rounded-md flex items-center justify-center mb-4">
                         <span className="text-gray-500">Photo</span>
                     </div>
-                    <p className="text-sm text-gray-500 text-center">
+                    <p className="text-sm text-gray-500 text-center break-words">
                         Signed in as User ID: <span className="font-mono text-gray-700">{userId}</span>
                     </p>
                 </div>
@@ -135,7 +152,7 @@ const App = () => {
                             value={dob}
                             onChange={(e) => setDob(e.target.value)}
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="DD / Mmm / Yyyy"
+                            placeholder="DD/MM/YYYY"
                         />
                     </div>
                     <div>
@@ -152,7 +169,15 @@ const App = () => {
                         />
                     </div>
                     
-                    <div className="flex justify-between space-x-4">
+                    {statusMessage && (
+                        <div className="mt-4 text-center text-sm font-medium">
+                            <p className={statusMessage.includes('Error') || statusMessage.includes('Please') ? 'text-red-600' : 'text-green-600'}>
+                                {statusMessage}
+                            </p>
+                        </div>
+                    )}
+
+                    <div className="flex justify-between space-x-4 mt-6">
                         <button
                             type="submit"
                             className="flex-1 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
