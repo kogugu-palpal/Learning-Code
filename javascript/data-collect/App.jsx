@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously } from 'firebase/auth';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
-// This configuration is automatically provided by the Canvas environment.
 const firebaseConfig = {
     apiKey: "AIzaSyAAHVZbTMRfV-VXUI1S9exJRfLjzXXneUw",
     authDomain: "data-collection-ad39e.firebaseapp.com",
@@ -14,6 +13,67 @@ const firebaseConfig = {
     messagingSenderId: "187511830981",
     appId: "1:187511830981:web:7f03d1a3f45a9039ecb3ac",
     measurementId: "G-9YQ09BB8F5"
+};
+
+// Translation content for different languages
+const translations = {
+    'English': {
+        headerTitle: 'Data Collection',
+        headerDescription: 'Please fill out the form below to submit your details.',
+        labelLanguage: 'Language',
+        labelName: 'Name',
+        labelDOB: 'Date of Birth',
+        labelFatherName: 'Father Name',
+        placeholderName: 'Enter your name',
+        placeholderDOB: 'DD/MM/YYYY',
+        placeholderFatherName: 'Enter your father\'s name',
+        btnSubmit: 'Submit',
+        btnExit: 'Exit',
+        status_emptyFields: 'Please fill out all fields.',
+        status_invalidDOB: 'Please enter Date of Birth in DD/MM/YYYY format.',
+        status_initError: 'Error: Firebase is not initialized or user is not authenticated.',
+        status_submitError: 'Error submitting data. Please try again.',
+        status_success: 'Data submitted successfully!',
+        status_exit: 'Exiting the form.',
+    },
+    'Burmese': {
+        headerTitle: 'ကိုယ်ရေးအချက်အလက် ထည့်သွင်းခြင်း',
+        headerDescription: 'ကျေးဇူးပြု၍ သင်၏ကိုယ်ရေးအချက်အလက်များကို ပေးပို့ရန် အောက်ဖော်ပြပါ ဖောင်ကိုဖြည့်ပါ။',
+        labelLanguage: 'ဘာသာစကား',
+        labelName: 'အမည်',
+        labelDOB: 'မွေးသက္ကရာဇ်',
+        labelFatherName: 'အဖေအမည်',
+        placeholderName: 'သင်၏အမည်ကိုရိုက်ထည့်ပါ',
+        placeholderDOB: 'နေ့/လ/နှစ်',
+        placeholderFatherName: 'သင်၏အဖေအမည်ကိုရိုက်ထည့်ပါ',
+        btnSubmit: 'တင်ပြပါ',
+        btnExit: 'ထွက်ရန်',
+        status_emptyFields: 'ကျေးဇူးပြု၍ အချက်အလက်အားလုံးကို ဖြည့်ပါ။',
+        status_invalidDOB: 'ကျေးဇူးပြု၍ မွေးသက္ကရာဇ်ကို နေ့/လ/နှစ် ပုံစံဖြင့် ထည့်ပါ။',
+        status_initError: 'အမှား- စင်တာနှင့် ချိတ်ဆက်မထားပါ။ သို့မဟုတ် အသုံးပြုသူကို အတည်မပြုထားပါ။',
+        status_submitError: 'အချက်အလက်ပေးပို့ရာတွင် အမှားဖြစ်ခဲ့ပါသည်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။',
+        status_success: 'အချက်အလက် ပေးပို့မှု အောင်မြင်ပါသည်။',
+        status_exit: 'ဖောင်မှ ထွက်ရန် ဘရောက်ဆာ(browser)ကို ပိတ်ပါ။ ',
+    },
+    'Thai': {
+        headerTitle: 'การรวบรวมข้อมูล',
+        headerDescription: 'โปรดกรอกแบบฟอร์มด้านล่างเพื่อส่งรายละเอียดของคุณ',
+        labelLanguage: 'ภาษา',
+        labelName: 'ชื่อ',
+        labelDOB: 'วันเกิด',
+        labelFatherName: 'ชื่อบิดา',
+        placeholderName: 'กรุณาใส่ชื่อของคุณ',
+        placeholderDOB: 'วว/ดด/ปปปป (พ.ศ.)',
+        placeholderFatherName: 'กรุณาใส่ชื่อบิดาของคุณ',
+        btnSubmit: 'ส่งข้อมูล',
+        btnExit: 'ออก',
+        status_emptyFields: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+        status_invalidDOB: 'โปรดป้อนวันเกิดในรูปแบบ วว/ดด/ปปปป',
+        status_initError: 'ข้อผิดพลาด: Firebase ไม่ได้เริ่มต้นหรือผู้ใช้ไม่ได้ลงชื่อเข้าใช้',
+        status_submitError: 'ข้อผิดพลาดในการส่งข้อมูล โปรดลองอีกครั้ง',
+        status_success: 'ส่งข้อมูลสำเร็จแล้ว!',
+        status_exit: 'กำลังออกจากแบบฟอร์ม',
+    },
 };
 
 // The main application component.
@@ -55,30 +115,59 @@ const App = () => {
         initFirebase();
     }, []);
 
-    // Function to validate the date of birth format.
+    // Function to validate the date of birth in DD/MM/YYYY (Gregorian).
     const validateDob = (dateString) => {
         // Regex for DD/MM/YYYY format.
         const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
         return regex.test(dateString);
     };
 
+    // Function to validate the date of birth in วว/ดด/ปปปป (Thai Buddhist Era).
+    const validateThaiDob = (dateString) => {
+        const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+        const match = dateString.match(regex);
+        if (!match) return false;
+
+        let day = parseInt(match[1], 10);
+        let month = parseInt(match[2], 10);
+        let year = parseInt(match[3], 10);
+
+        // Convert Buddhist year to Gregorian year by subtracting 543.
+        // This is necessary for accurate date validation.
+        year = year - 543;
+
+        // Check if the date is valid after converting to Gregorian.
+        const date = new Date(year, month - 1, day);
+        return date.getFullYear() === year && date.getMonth() + 1 === month && date.getDate() === day;
+    };
+
+
     // Function to handle form submission.
     const handleSubmit = async (e) => {
         e.preventDefault();
         setStatusMessage('');
+        const currentTranslations = translations[language];
 
         if (!db || !userId) {
-            setStatusMessage('Error: Firebase is not initialized or user is not authenticated.');
+            setStatusMessage(currentTranslations.status_initError);
             return;
         }
 
         if (!name || !dob || !fatherName) {
-            setStatusMessage('Please fill out all fields.');
+            setStatusMessage(currentTranslations.status_emptyFields);
             return;
         }
 
-        if (!validateDob(dob)) {
-            setStatusMessage('Please enter Date of Birth in DD/MM/YYYY format.');
+        // Validate DOB based on the selected language.
+        let isValidDate = false;
+        if (language === 'Thai') {
+            isValidDate = validateThaiDob(dob);
+        } else {
+            isValidDate = validateDob(dob);
+        }
+
+        if (!isValidDate) {
+            setStatusMessage(currentTranslations.status_invalidDOB);
             return;
         }
 
@@ -95,7 +184,7 @@ const App = () => {
                 language: language,
             });
             console.log("Document written with ID:", docRef.id);
-            setStatusMessage('Data submitted successfully!');
+            setStatusMessage(currentTranslations.status_success);
 
             // Clear the form fields after successful submission.
             setName('');
@@ -104,13 +193,14 @@ const App = () => {
 
         } catch (error) {
             console.error("Error adding document:", error);
-            setStatusMessage('Error submitting data. Please try again.');
+            setStatusMessage(currentTranslations.status_submitError);
         }
     };
 
     // Function to handle the "Exit" button click.
     const handleExit = () => {
-        setStatusMessage('Exiting the form.');
+        const currentTranslations = translations[language];
+        setStatusMessage(currentTranslations.status_exit);
     };
 
     if (loading) {
@@ -121,18 +211,20 @@ const App = () => {
         );
     }
 
+    const currentTranslations = translations[language];
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
             <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-sm border border-gray-100">
                 <div className="text-center mb-8">
-                    <h1 className="text-2xl font-bold text-gray-800 mb-2">Data Collection</h1>
-                    <p className="text-sm text-gray-500">Please fill out the form below to submit your details.</p>
+                    <h1 className="text-2xl font-bold text-gray-800 mb-2">{currentTranslations.headerTitle}</h1>
+                    <p className="text-sm text-gray-500">{currentTranslations.headerDescription}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label htmlFor="language" className="block text-sm font-semibold text-gray-700">
-                            Language
+                            {currentTranslations.labelLanguage}
                         </label>
                         <select
                             id="language"
@@ -148,7 +240,7 @@ const App = () => {
 
                     <div>
                         <label htmlFor="name" className="block text-sm font-semibold text-gray-700">
-                            Name
+                            {currentTranslations.labelName}
                         </label>
                         <input
                             type="text"
@@ -156,12 +248,12 @@ const App = () => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                            placeholder="Enter your name"
+                            placeholder={currentTranslations.placeholderName}
                         />
                     </div>
                     <div>
                         <label htmlFor="dob" className="block text-sm font-semibold text-gray-700">
-                            Date of Birth
+                            {currentTranslations.labelDOB}
                         </label>
                         <input
                             type="text"
@@ -169,12 +261,12 @@ const App = () => {
                             value={dob}
                             onChange={(e) => setDob(e.target.value)}
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                            placeholder="DD/MM/YYYY"
+                            placeholder={currentTranslations.placeholderDOB}
                         />
                     </div>
                     <div>
                         <label htmlFor="fatherName" className="block text-sm font-semibold text-gray-700">
-                            Father Name
+                            {currentTranslations.labelFatherName}
                         </label>
                         <input
                             type="text"
@@ -182,7 +274,7 @@ const App = () => {
                             value={fatherName}
                             onChange={(e) => setFatherName(e.target.value)}
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                            placeholder="Enter your father's name"
+                            placeholder={currentTranslations.placeholderFatherName}
                         />
                     </div>
 
@@ -199,14 +291,14 @@ const App = () => {
                             type="submit"
                             className="flex-1 flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                         >
-                            Submit
+                            {currentTranslations.btnSubmit}
                         </button>
                         <button
                             type="button"
                             onClick={handleExit}
                             className="flex-1 flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors"
                         >
-                            Exit
+                            {currentTranslations.btnExit}
                         </button>
                     </div>
                 </form>
@@ -217,8 +309,7 @@ const App = () => {
 
 const container = document.getElementById('root');
 if (container) {
-    const root = createRoot(container);
-    root.render(<App />);
+    ReactDOM.render(<App />, container);
 }
 
 export default App;
