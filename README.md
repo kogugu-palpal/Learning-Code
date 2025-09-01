@@ -5,6 +5,7 @@ Learning Code Python and JavaScript
 │   ├── week1/
 │   ├── week2/
 │   └── projects/
+    create new datacollect project
 ├── javascript/
 │   ├── week1/
 │   ├── week2/
