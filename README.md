@@ -12,3 +12,5 @@ Learning Code Python and JavaScript
 │   └── projects/
 └── notes/
     └── resources.md
+
+this is a test to confirm branch protection
