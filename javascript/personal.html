@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+
+    <!-- Top Section: Logo Only -->
+    <header class="w-full bg-white shadow-sm p-4 md:p-6 lg:p-8 flex items-center justify-center">
+        <!-- Replace with your logo image URL -->
+        <img src="https://placehold.co/80x80/D1D5DB/1F2937?text=LOGO" alt="Logo" class="w-20 h-20 rounded-full">
+    </header>
+
+    <!-- Sky Blue Section -->
+    <div class="w-full bg-sky-500 py-10 md:py-16 text-center text-white shadow-lg">
+        <h2 class="text-2xl md:text-3xl font-bold">Main Header of the Page</h2>
+    </div>
+
+    <!-- Main Content Section -->
+    <main class="w-full p-4 md:p-8 lg:p-12 -mt-10 sm:-mt-16 z-10">
+        <div class="container mx-auto max-w-3xl">
+            <!-- Photo Block -->
+            <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl">
+                <!-- Outer block fills full screen width, padding creates inner content area -->
+                <div class="bg-gray-800 p-8 sm:p-12 md:p-16 flex justify-center items-center">
+                    <img
+                        src="https://placehold.co/200x200/F3F4F6/1F2937?text=PASSPORT+PHOTO"
+                        alt="Passport-sized photo"
+                        class="w-48 h-48 sm:w-56 sm:h-56 object-cover rounded-xl border-4 border-white shadow-lg transition-transform duration-300 transform hover:scale-105"
+                        onerror="this.src='https://placehold.co/200x200/E5E7EB/4B5563?text=Image+Not+Found'"
+                    />
+                </div>
+            </div>
+
+            <!-- Content Under Photo -->
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mt-6 text-left">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">
+                    Another Header Below the Photo
+                </h3>
+                <p class="text-gray-700 leading-relaxed">
+                    This is where you can add your main text. This area is perfect for a short bio, an introduction to a project, or any other notes you want to provide. You can customize the content by replacing this placeholder text.
+                </p>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    The entire page is designed to be fully responsive. It will look great on a desktop monitor and will automatically adjust for a mobile screen, ensuring your content is always easy to read and access via a QR code.
+                </p>
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>
