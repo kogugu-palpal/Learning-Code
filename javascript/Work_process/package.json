@@ -1,0 +1,13 @@
+{
+  "name": "work-project",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "init-tailwind": "tailwindcss init",
+    "dev": "...",
+    "watch-tailwind": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
