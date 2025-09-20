@@ -1,0 +1,14 @@
+{
+  "name": "work-project",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "init-tailwind": "tailwindcss init",
+    "dev": "...",
+    "watch-tailwind": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+  },
+  "dependencies": {
+    "firebase": "^12.3.0",
+    "tailwindcss": "^3.4.1"
+  }
+}

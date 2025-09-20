@@ -1,0 +1,39 @@
+To watch for file changes and automatically rebuild:
+
+Bash
+
+npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
+
+
+This command tells Tailwind to monitor your input.css file and any files it's configured to scan (like your HTML files) for changes. Whenever it detects a change, it automatically recompiles your CSS into output.css.
+
+To perform a single build:
+
+Bash
+
+npx tailwindcss -i ./src/input.css -o ./dist/output.css
+This command runs the build process just once. It's useful if you just want to generate the CSS file without having it continuously watch for changes.
+
+
+
+Yes, there's a shorter way to run Tailwind's watch command!
+
+The command you're likely thinking of, which is quicker for just watching changes, is:
+
+Bash
+
+npx tailwindcss -o ./dist/output.css --watch
+This command assumes you have:
+
+Node.js and npm (or yarn) installed.
+
+Tailwind CSS installed in your project.
+
+A CSS file (like input.css in a src folder) that imports Tailwind, which Tailwind then processes.
+
+When you run this, Tailwind will watch your project files (HTML, JS, etc.) for changes and automatically recompile your CSS in ./dist/output.css whenever you save a file. This is much more convenient for day-to-day development!
+
+
+to recreate css watch command is something change in html.
+
+npx tailwindcss --watch
