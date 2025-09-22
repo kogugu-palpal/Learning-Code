@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Permit Document</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSy...",
+        authDomain: "your-project-id.firebaseapp.com",
+        projectId: "your-project-id",
+        storageBucket: "your-project-id.appspot.com",
+        messagingSenderId: "123456789",
+        appId: "1:123456789:web:a1b2c3d4e5f6g7h8"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+
+        // Get a reference to the Firestore service
+        const db = firebase.firestore(app);
+
+        // Test the connection
+        console.log("Firebase is initialized and connected!");
+    </script>
+
+
+    <link href="./dist/output.css" rel="stylesheet">
+    <style>
+        /* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap');
+        */
+        body {
+            font-family: 'Sarabun', 'Inter', sans-serif;
+            background-color: #e5e7eb;
+        }
+        .text-thai {
+            font-family: 'Sarabun', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Header Image -->
+    <header class="w-full bg-white h-[75px] flex items-center">
+        
+        <!-- Logo position -->
+        <img 
+            src="images/mobile_long.png"
+            alt="Work Permit Header" 
+            class="w-[337px] h-auto
+            sm:ml-8       /* push a little from left on medium */
+            lg:ml-[17.8%]"  /* move towarad middle on large screen */
+            
+        />
+    </header>
+
+    <div class="w-full h-[39.8px] bg-[#55a2cc]"></div>
+
+
+    <!-- Main Content Area -->
+    <main class="w-full p-2 flex flex-col items-start flex-grow bg-white">
+        <!-- Container for the content -->
+        <div class="w-full">
+            <!-- Title Section -->
+            <div class="text-[#215085] text-center sm:mb-6 sm:mt-6 font-bold text-lg">
+                <p class="leading-tight">ทะเบียนใบอนุญาตทำงานของคนต่างด้าว
+                </p>
+                <p class="-mt-1">ตามมติคณะรัฐมนตรี เมื่อวันที่ 24 กันยายน 2567 (บต.50 อ.6)
+                </p>
+            </div>
+
+            <!-- Passport Photo Section -->
+
+            <div class="flex justify-center mb-6 border-t border-b p-[20px] h-[288px]">
+            
+                <img
+                    src="https://res.cloudinary.com/dpznri1xc/image/upload/v1758353305/Mr.ThetKhaingMin_giv13k.jpg"
+                    alt="Passport-sized photo"
+                    class="w-48 h-60 sm:w-56 sm:h-60 object-cover"
+                    onerror="this.src='https://placehold.co/200x200/E5E7EB/4B5563?text=Image+Not+Found'"
+                />
+            
+            </div>
+
+            <!-- Text Content with Labels and Values -->
+            <div class="space-y-5 text-sm">
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">เลขคำขอ</p>
+                    <p class="text-sm pl-20">WP-68-1017869</p>
+                </div>
+                
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">Version no</p>
+                    <p class="pl-20">01</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">แบบคำขอ</p>
+                    <p class="pl-20">บต.50 อ.6</p>
+                </div>
+
+                <h1 class="text-lg font-bold">รายละเอียดแรงงานต่างด้าวรายบุคคล</h1>
+
+                <hr class="border-t border-gray-300">
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">เลขอ้างอิงคนต่างด้าว</p>
+                    <p class="pl-20">2497301004348</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">เลขประจำตัวคนต่างด้าว</p>
+                    <p class="pl-20">6681090206799</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">ใบอนุญาตเลขที่</p>
+                    <p class="pl-20">-</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">ออกให้ ณ จังหวัด</p>
+                    <p class="pl-20">สำนักงานจัดหางานกรุงเทพมหานครพื้นที่ 8</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">ชื่อภาษาไทย</p>
+                    <p class="pl-20">นาย เต็ก คาย มิน</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">ชื่อภาษาอังกฤษ</p>
+                    <p class="pl-20">MR. THET KHAING MIN</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">อายุ (ปี)</p>
+                    <p class="pl-20">42</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">สัญชาติ</p>
+                    <p class="pl-20">เมียนมา</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">เลขที่หนังสือเดินทาง</p>
+                    <p class="pl-20"> CC000000 </p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">สถานที่ทำงาน</p>
+                    <p class="pl-20">422/58 หมู่ที่ 1 ตำบลทุ่งกระพังโหม อำเภอกำแพงแสน จังหวัดนครปฐม 73140</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">ชื่อนายจ้าง หรือ สถานที่ทำงาน</p>
+                    <p class="pl-20">บริษัท เอ็ม ปราวดี จำกัด</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">ที่ตั้งสำนักงาน</p>
+                    <p class="pl-20">422/58 หมู่ที่ 1 ตำบลทุ่งกระพังโหม อำเภอกำแพงแสน จังหวัดนครปฐม 73140</p>
+                </div>
+
+                <div class="flex flex-col">
+                <p class="text-[#215085] font-semibold text-thai">ลักษณะงาน</p>
+                <p class="pl-20">กรรมการ (การให้บริการต่างๆ)</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-[#215085] font-semibold text-thai">อนุญาตให้ทำงานถึงวันที่</p>
+                    <p class="pl-20">31/03/2025</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="w-full text-white py-6 mt-8">
+        <div>
+            <p class="text-sm md:text-base mb-2 text-thai">
+                สำนักบริหารแรงงานต่างด้าว กรมการจัดหางาน ถนนมิตรไมตรี แขวงดินแดง เขตดินแดง กรุงเทพมหานคร 10400</p>
+            <p class="text-xs md:text-sm text-gray-400">
+                ช่องทางการขอต่อกรมการจัดหางานหมายเลข 1506 กด 2 </p>
+            <p class="text-xs md:text-sm text-gray-400 mt-2">
+                Copyright $copy; Department of Employment. All rights reserved.
+                <br>
+                <span class="text-xs">
+                    workpermit2024.doe.go.th
+                </span>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
