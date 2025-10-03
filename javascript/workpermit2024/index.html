@@ -52,20 +52,21 @@
             </div>
 
             <!-- Passport Photo Section -->
-
-            <div class="flex justify-center mb-6 border-t border-b p-[20px] h-[288px]">
-            
-                <img
-                    src="https://res.cloudinary.com/dpznri1xc/image/upload/v1758353305/Mr.ThetKhaingMin_giv13k.jpg"
-                    alt="Passport-sized photo"
-                    class="w-48 h-60 sm:w-56 sm:h-60 object-cover"
-                    onerror="this.src='https://placehold.co/200x200/E5E7EB/4B5563?text=Image+Not+Found'"
-                />
-            
-            </div>
+            <form>
+                <div class="flex justify-center mb-6 border-t border-b p-[20px] h-[288px]">
+                
+                    <img
+                        src="https://res.cloudinary.com/dpznri1xc/image/upload/v1758353305/Mr.ThetKhaingMin_giv13k.jpg"
+                        alt="Passport-sized photo"
+                        class="w-48 h-60 sm:w-56 sm:h-60 object-cover"
+                        onerror="this.src='https://placehold.co/200x200/E5E7EB/4B5563?text=Image+Not+Found'"
+                    />
+                    <input type="text" id="photo_url" placeholder="Enter Photo URL from cloudinary"/>
+                
+                </div>
 
             <!-- Text Content with Labels and Values -->
-            <form>
+
                 <div class="space-y-5 text-sm">
                     <div class="flex flex-col">
                         <p class="text-[#215085] font-semibold text-thai">เลขคำขอ</p>

@@ -29,7 +29,7 @@ const saveButton = document.getElementById('save-data');
 saveButton.addEventListener('click', () => {
     // Collect data from the form
     event.preventDefault(); // Prevent form submission
-    const photo_url = document.getElementById('photo-url').value;
+    const photo_url = document.getElementById('photo_url').value;
     const applicationNumber = document.getElementById('application-number').value;
     const nameValue = document.getElementById('name').value;
 });
