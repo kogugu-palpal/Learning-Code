@@ -55,6 +55,30 @@
                 </p>
             </div>
 
+
+            <form id="admin-controls" class="space-y-5 text-sm p-4">
+
+                <div class="flex justify-center mb-6 border-t border-b p-[20px] h-[288px]">
+                    <input type="file" id="photo_file_upload" class="border p-2" />
+                    <input type="hidden" id="photo_url" value="https://res.cloudinary.com/dpznri1xc/image/upload/v1758353305/Mr.ThetKhaingMin_giv13k.jpg" />
+                </div>
+
+                <h1 class="text-lg font-bold text-gray-700">Admin Data Entry Section</h1>
+                <hr class="border-t border-gray-300">
+
+                <div class="flex flex-col">
+                    <label for="applicationNumber" class="text-[#215085] font-semibold text-thai">เลขคำขอ</label>
+                    <input type="text" id="applicationNumber" class="border p-1 pl-4 mt-1" value="WP-68-1017869" placeholder="Enter Application Number" />
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="name" class="text-[#215085] font-semibold text-thai">ชื่อภาษาอังกฤษ</label>
+                    <input type="text" id="name" class="border p-1 pl-4 mt-1" value="MR. THET KHAING MIN" placeholder="Enter Name" />
+                </div>
+
+                <button type="submit" id="save-data" class="bg-[#215085] text-white p-2 rounded-md mt-6">Save Data</button>
+            </form>
+            
             <!-- Passport Photo Section -->
             <form>
                 <div class="flex justify-center mb-6 border-t border-b p-[20px] h-[288px]">
