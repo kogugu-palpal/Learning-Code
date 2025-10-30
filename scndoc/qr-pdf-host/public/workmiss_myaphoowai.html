@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Workpermit 2024</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png"> 
+
+    <style>
+        /* CSS is streamlined to ensure the iframe fills the entire viewport */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%; /* CRITICAL: Ensures full vertical space */
+            overflow: hidden; /* Prevents unwanted scrollbars */
+        }
+        #pdf-viewer-frame::before {
+        content: "";
+        display: block;
+        height: 44px; /* The height of the toolbar */
+        width: 100%;
+        background-color: white; /* Or your preferred background color */
+        position: absolute;
+        top: 0;
+        z-index: 10; /* Ensure it covers the toolbar */
+        }
+
+        /* CRITICAL FIX: The PDF.js viewer's toolbar has the ID 'toolbarContainer' */
+        #pdf-viewer-frame /deep/ #toolbarContainer,
+        #pdf-viewer-frame::shadow #toolbarContainer {
+            display: none !important; /* Forces the toolbar to disappear */
+        }
+        /* The iframe must fill 100% of the body */
+        #pdf-viewer-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+        margin-top: -44px; /* Move the entire viewer up */
+        padding-bottom: 44px; /* Push the bottom down to compensate */
+        }
+    </style>
+</head>
+<body>
+    <iframe 
+        id="pdf-viewer-frame" 
+        src="web/viewer.html?file=/workmiss_myaphoowai.pdf#zoom=page-width"  
+        title="Document Viewer"
+        style="width: 100%; height: 100%; border: none;"
+    >
+        <p style="text-align: center; padding-top: 50px;">
+            <a href="/workmiss_myaphoowai.pdf">
+                Click here to view or download the document if the viewer fails to load.
+            </a>
+        </p>
+    </iframe>
+</body>
+</html>
