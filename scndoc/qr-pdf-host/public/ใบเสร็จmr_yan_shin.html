@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Workpermit 2024</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png"> 
+
+    <style>
+        /* 1. Reset: Essential for all full-screen layouts */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%; 
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars on the main page */
+            box-sizing: border-box; /* Include padding/border in element's total width/height */
+        }
+        
+        /* 2. Desktop/Default: The iframe is 100% of the containing body/html */
+        #pdf-viewer-frame {
+            position: absolute; /* Ensures it sits over everything */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* 3. Mobile Override (CRITICAL FIX) */
+        /* Target screens smaller than 768px (standard tablet breakpoint) */
+        @media only screen and (max-width: 768px) {
+            #pdf-viewer-frame {
+                /* Force the iframe to use 100% of the Viewport Width/Height */
+                width: 100vw; 
+                height: 100vh;
+                /* Ensures no scrollbars or margins are added by the mobile browser */
+                position: fixed; 
+                top: 0;
+                left: 0;
+                z-index: 999; /* Ensure it's on top */
+            }
+        }
+    </style>
+</head>
+<body>
+    <iframe 
+        id="pdf-viewer-frame" 
+        src="web/viewer.html?file=/ใบเสร็จmr_yan_shin.pdf#zoom=page-width"  
+        title="Document Viewer"
+        style="width: 100%; height: 100%; border: none;"
+    >
+    </iframe>
+    /* The iframe fills the container, giving us a scalable PDF 
+    <iframe 
+        id="pdf-frame" 
+        src="ใบเสร็จmr_yan_shin.pdf#toolbar=0"  type="application/pdf"
+        title="Work Document Viewer"
+        >
+        <p>Your browser does not support embedded PDFs. 
+        Please <a href="ใบเสร็จmr_yan_shin.pdf">download the document</a>.
+        </p>
+    </iframe>*/
+    
+</body>
+</html>
