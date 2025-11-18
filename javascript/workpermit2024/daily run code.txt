@@ -37,3 +37,6 @@ When you run this, Tailwind will watch your project files (HTML, JS, etc.) for c
 to recreate css watch command is something change in html.
 
 npx tailwindcss --watch
+
+
+firebase deploy --only hosting
